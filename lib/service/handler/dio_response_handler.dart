@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'package:dio/dio.dart';
-import '../exception/http_exception.dart';
+import '../exception/app_exception.dart';
 
 class DioResponseHandler {
   /// Handle successful/failed responses (like ReturnResponse in http)
@@ -30,7 +30,7 @@ class DioResponseHandler {
   }
 
   /// Map Dio errors into your custom exceptions
-  static HttpException handleError(DioException error) {
+  static AppException handleError(DioException error) {
     if (error.response != null) {
       switch (error.response?.statusCode) {
         case 400:

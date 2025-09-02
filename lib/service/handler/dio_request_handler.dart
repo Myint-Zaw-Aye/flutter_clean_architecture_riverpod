@@ -1,5 +1,6 @@
 import 'dart:convert';
-import 'package:clean_architecture_riverpod/service/exception/http_exception.dart';
+import 'package:clean_architecture_riverpod/service/either.dart';
+import 'package:clean_architecture_riverpod/service/exception/app_exception.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 
@@ -7,7 +8,7 @@ import 'handler.dart';
 
 class DioRequestHandler {
   /// Generic request handler with parser
-  static Future<T> handleRequest<T>(
+  static Future<Either<AppException,T>> handleRequest<T>(
     Future<Response> Function() request,
     T Function(dynamic json) parser,
   ) async {
@@ -18,18 +19,20 @@ class DioRequestHandler {
 
       debugPrint("✅ Data: $decodedData");
 
-      return parser(decodedData);
+      return Either.right(parser(decodedData));
     } on DioException catch (e) {
       debugPrint('❌ Dio Exception: ${e.response}');
-      throw HttpException('Request failed: ${e.response}');
+    //  throw HttpException('Request failed: ${e.response}');
+      return Either.left(AppException('Request failed: ${e.response}'));
     } catch (e) {
       debugPrint('❌ Unexpected error: $e');
-      throw HttpException('Request failed: $e');
+     // throw HttpException('Request failed: $e');
+      return Either.left(AppException('Request failed: $e'));
     }
   }
 
 
-  static Future<T> handleTokenRequest<T>(
+  static Future<Either<AppException,T>> handleTokenRequest<T>(
     Future<Response> Function(String token) request,
     Future<String> Function() tokenProvider,
     T Function(dynamic json) parser,
@@ -43,13 +46,16 @@ class DioRequestHandler {
 
       debugPrint("✅ Data: $decodedData");
 
-      return parser(decodedData);
+      //return parser(decodedData);
+      return Either.right(parser(decodedData));
     } on DioException catch (e) {
       debugPrint('❌ Dio Exception: ${e.response}');
-      throw HttpException('Request failed: ${e.response}');
+      //throw HttpException('Request failed: ${e.response}');
+      return Either.left(AppException('Request failed: ${e.response}'));
     } catch (e) {
       debugPrint('❌ Unexpected error: $e');
-      throw HttpException('Request failed: $e');
+      //throw HttpException('Request failed: $e');
+      return Either.left(AppException('Request failed: $e'));
     }
   }
 }
