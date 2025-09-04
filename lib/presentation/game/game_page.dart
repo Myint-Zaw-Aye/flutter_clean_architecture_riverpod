@@ -1,8 +1,8 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'game_state.dart'; // your freezed state
-import 'game_notifier.dart'; // your GameNotifier
+import 'state/game_state.dart'; // your freezed state
+import 'state/game_notifier.dart'; // your GameNotifier
 
 
 @RoutePage()

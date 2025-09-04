@@ -7,4 +7,5 @@ class UserRepository {
   final UserService userService;
   UserRepository(this.userService);
   Future<Either<AppException,List<User>>> getUserList() => userService.getUserList();
+  Future<Either<AppException,User>> getUserInfo() => userService.getUserInfo();
 }

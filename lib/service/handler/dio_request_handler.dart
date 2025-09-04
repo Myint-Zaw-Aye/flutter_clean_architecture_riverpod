@@ -6,56 +6,49 @@ import 'package:flutter/material.dart';
 
 import 'handler.dart';
 
+
 class DioRequestHandler {
-  /// Generic request handler with parser
-  static Future<Either<AppException,T>> handleRequest<T>(
+  /// Core handler used by both request types
+  static Future<Either<AppException, T>> _handle<T>(
     Future<Response> Function() request,
     T Function(dynamic json) parser,
   ) async {
     try {
       final response = await request();
       final data = DioResponseHandler.handleResponse(response);
-      final dynamic decodedData = data is String ? json.decode(data) : data;
+      final decodedData = data is String ? json.decode(data) : data;
 
       debugPrint("✅ Data: $decodedData");
 
       return Either.right(parser(decodedData));
     } on DioException catch (e) {
-      debugPrint('❌ Dio Exception: ${e.response}');
-    //  throw HttpException('Request failed: ${e.response}');
-      return Either.left(AppException('Request failed: ${e.response}'));
+      debugPrint('❌ Dio Exception: ${e.message}');
+      if (e.type == DioExceptionType.connectionTimeout ||
+          e.type == DioExceptionType.sendTimeout ||
+          e.type == DioExceptionType.receiveTimeout) {
+        return Either.left(AppException("Request failed: Connection timeout"));
+      }
+      return Either.left(AppException('Request failed: ${e.message}'));
     } catch (e) {
       debugPrint('❌ Unexpected error: $e');
-     // throw HttpException('Request failed: $e');
       return Either.left(AppException('Request failed: $e'));
     }
   }
 
+  /// Normal request
+  static Future<Either<AppException, T>> handleRequest<T>(
+    Future<Response> Function() request,
+    T Function(dynamic json) parser,
+  ) =>
+      _handle(request, parser);
 
-  static Future<Either<AppException,T>> handleTokenRequest<T>(
+  /// Token-based request
+  static Future<Either<AppException, T>> handleTokenRequest<T>(
     Future<Response> Function(String token) request,
     Future<String> Function() tokenProvider,
     T Function(dynamic json) parser,
   ) async {
     final token = await tokenProvider();
-    try {
-      final response = await request(token);
-
-      final data = DioResponseHandler.handleResponse(response);
-      final dynamic decodedData = data is String ? json.decode(data) : data;
-
-      debugPrint("✅ Data: $decodedData");
-
-      //return parser(decodedData);
-      return Either.right(parser(decodedData));
-    } on DioException catch (e) {
-      debugPrint('❌ Dio Exception: ${e.response}');
-      //throw HttpException('Request failed: ${e.response}');
-      return Either.left(AppException('Request failed: ${e.response}'));
-    } catch (e) {
-      debugPrint('❌ Unexpected error: $e');
-      //throw HttpException('Request failed: $e');
-      return Either.left(AppException('Request failed: $e'));
-    }
+    return _handle(() => request(token), parser);
   }
 }

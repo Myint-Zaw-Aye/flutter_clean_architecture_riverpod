@@ -24,5 +24,20 @@ class UserService {
     );
   }
 
+  Future<Either<AppException,User>> getUserInfo() {
+    return DioRequestHandler.handleRequest<User>(
+      () {
+        return DioClient.dio.get("$mainUrl/19f36f20c618f77c8327",
+          options: Options(
+            headers: {
+              'Accept': 'application/json',
+            },
+          ),
+        );
+      },
+      (json) => User.fromJson(json),
+    );
+  }
+
   
 }
