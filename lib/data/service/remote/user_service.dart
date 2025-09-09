@@ -1,10 +1,10 @@
 import 'package:clean_architecture_riverpod/data/model/user.dart';
-import 'package:clean_architecture_riverpod/service/either.dart';
-import 'package:clean_architecture_riverpod/service/exception/app_exception.dart';
 import 'package:dio/dio.dart';
-import '../../core/config/flavour_manager.dart';
+import '../../../core/config/flavour_manager.dart';
+import '../../../core/app_exception.dart';
+import '../../../core/either.dart';
 import 'dio_client.dart';
-import '../handler/dio_request_handler.dart';
+import 'handler/dio_request_handler.dart';
 
 class UserService {
   String mainUrl = FlavorManager.env?.baseUrl?? "";

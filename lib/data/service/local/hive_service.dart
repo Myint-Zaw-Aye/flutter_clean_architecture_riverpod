@@ -1,6 +1,6 @@
 import 'dart:convert';
-import 'package:clean_architecture_riverpod/service/hive_secure_helper.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import '../../../core/hive_secure_helper.dart';
 
 mixin class HiveCacheManager {
 

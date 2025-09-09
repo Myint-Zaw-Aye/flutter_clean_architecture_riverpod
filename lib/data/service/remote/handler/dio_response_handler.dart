@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'package:dio/dio.dart';
-import '../exception/app_exception.dart';
+import '../../../../core/app_exception.dart';
 
 class DioResponseHandler {
   /// Handle successful/failed responses (like ReturnResponse in http)

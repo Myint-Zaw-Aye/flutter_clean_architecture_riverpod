@@ -1,9 +1,9 @@
 import 'dart:convert';
-import 'package:clean_architecture_riverpod/service/either.dart';
-import 'package:clean_architecture_riverpod/service/exception/app_exception.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 
+import '../../../../core/app_exception.dart';
+import '../../../../core/either.dart';
 import 'handler.dart';
 
 

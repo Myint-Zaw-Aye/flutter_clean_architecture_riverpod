@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
-import '../../core/config/flavour_manager.dart';
+import 'package:flutter/material.dart';
+import '../../../core/config/flavour_manager.dart';
 
 class DioClient {
   static final Dio dio = Dio(BaseOptions(
@@ -14,15 +15,15 @@ class DioClient {
       onRequest: (options, handler) {
         // Add headers like Authorization
         //options.headers['Authorization'] = 'Bearer your_access_token';
-        print('--> ${options.method} ${options.uri}');
+        debugPrint('--> ${options.method} ${options.uri}');
         return handler.next(options); // continue
       },
       onResponse: (response, handler) {
-        print('<-- ${response.statusCode} ${response.requestOptions.uri}');
+        debugPrint('<-- ${response.statusCode} ${response.requestOptions.uri}');
         return handler.next(response); // continue
       },
       onError: (DioException e, handler) {
-        print('❌ Error: ${e.message}');
+        debugPrint('❌ Error: ${e.message}');
         return handler.next(e); // continue
       },
     ))

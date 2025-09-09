@@ -1,7 +1,7 @@
+import 'package:clean_architecture_riverpod/core/app_exception.dart';
 import 'package:clean_architecture_riverpod/data/repository/user_repository.dart';
-import 'package:clean_architecture_riverpod/service/exception/app_exception.dart';
-import 'package:clean_architecture_riverpod/service/remote/dio_client.dart';
-import 'package:clean_architecture_riverpod/service/remote/user_service.dart';
+import 'package:clean_architecture_riverpod/data/service/remote/dio_client.dart';
+import 'package:clean_architecture_riverpod/data/service/remote/user_service.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:http_mock_adapter/http_mock_adapter.dart';

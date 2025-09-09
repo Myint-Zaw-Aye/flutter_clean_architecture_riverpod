@@ -1,7 +1,8 @@
 import 'package:clean_architecture_riverpod/data/model/user.dart';
-import 'package:clean_architecture_riverpod/service/either.dart';
-import 'package:clean_architecture_riverpod/service/exception/app_exception.dart';
-import 'package:clean_architecture_riverpod/service/remote/user_service.dart';
+
+import '../../core/app_exception.dart';
+import '../../core/either.dart';
+import '../service/remote/user_service.dart';
 
 class UserRepository {
   final UserService userService;

@@ -1,5 +1,5 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:clean_architecture_riverpod/presentation/game/game_page.dart';
+import 'package:clean_architecture_riverpod/presentation/features/game/game_page.dart';
 import 'package:clean_architecture_riverpod/presentation/home/detial_page.dart';
 import 'package:clean_architecture_riverpod/presentation/home/home_page.dart';
 import 'package:clean_architecture_riverpod/presentation/home/splash_page.dart';

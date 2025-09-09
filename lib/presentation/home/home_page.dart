@@ -1,8 +1,9 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:clean_architecture_riverpod/provider/user_provider.dart';
 import 'package:clean_architecture_riverpod/routes/app_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+import '../provider/user_provider.dart';
 
 @RoutePage()
 class HomePage extends ConsumerWidget {
@@ -34,7 +35,7 @@ class HomePage extends ConsumerWidget {
               }
               return ListView.separated(
                 itemCount: users.length,
-                separatorBuilder: (_, __) => const Divider(height: 1),
+                separatorBuilder: (_, _) => const Divider(height: 1),
                 itemBuilder: (context, index) {
                   final user = users[index];
                   return ListTile(
